@@ -1,0 +1,8 @@
+title: Home
+layout: pages/page
+script: investments/index
+
+main:
+  - body.md
+navbar:
+  - ../_shared/navbar/index.md

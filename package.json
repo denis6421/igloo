@@ -1,0 +1,23 @@
+{
+  "name": "igloo",
+  "version": "1.0.0",
+  "description": "Website for igloo",
+  "main": "index.js",
+  "scripts": {
+    "build": "cuttlebelle",
+    "watch-sass": "node-sass -w ./assets/scss/index.scss ./assets/css/index.css",
+    "watch": "yarn watch-sass & cuttlebelle -w"
+  },
+  "cuttlebelle": {
+    "site": {
+      "markdownRenderer": "markdown.js"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "node-sass": "^5.0.0"
+  }
+}

@@ -1,0 +1,36 @@
+.navbar {
+  z-index: 999;
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.39) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    #23566d;
+  height: 110px;
+  width: 100%;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  &-flex {
+    height: 100%;
+  }
+  &-logo {
+    margin-right: 50px;
+  }
+  &-links {
+    .navbar-link {
+      margin-right: 49px;
+      font-size: 1.125rem;
+
+      a {
+        color: white;
+        font-size: 18px;
+
+        font-family: "Roboto", sans-serif;
+      }
+      &:last-child {
+        margin-right: 0px;
+      }
+    }
+  }
+}

@@ -1,0 +1,243 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300&display=swap");
+.main-grid {
+  max-width: 1180px;
+  width: calc(100% - 100px);
+  margin: auto;
+}
+$main-font: "Roboto", sans-serif;
+* {
+  font-family: $main-font;
+}
+.page {
+  padding-top: 110px;
+}
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.flex-start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.absolute {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+@mixin grid-2($margin-top, $margin) {
+  li {
+    margin-top: #{$margin-top}px;
+    margin-right: #{$margin}px;
+    width: calc(100% / 2 - #{$margin * 0.5}px);
+    &:nth-of-type(-n + 2) {
+      margin-top: 0px;
+    }
+    &:nth-child(even) {
+      margin-right: 0px;
+    }
+  }
+}
+
+@mixin grid-3($margin-top, $margin) {
+  li {
+    margin-top: #{$margin-top}px;
+    width: calc(100% / 3 - #{$margin * 0.67}px);
+    margin-right: #{$margin}px;
+    &:nth-of-type(-n + 3) {
+      margin-top: 0px;
+    }
+    &:nth-of-type(3n) {
+      margin-right: 0px;
+    }
+  }
+}
+
+@mixin grid-4($margin-top, $margin) {
+  li {
+    margin-top: #{$margin-top}px;
+    width: calc(100% / 4 - #{$margin * 0.8}px);
+    margin-right: #{$margin}px;
+    &:nth-of-type(-n + 4) {
+      margin-top: 0px;
+    }
+    &:nth-of-type(4n) {
+      margin-right: 0px;
+    }
+  }
+}
+
+.subscribe {
+  width: 100%;
+  height: 466px;
+  position: relative;
+  &-bg {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  &-form {
+    position: relative;
+    padding: 78px 60px 68px 120px;
+    color: white;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    &-section {
+      display: flex;
+      flex-direction: column;
+      margin-right: 15px;
+      label {
+        line-height: 21.09px;
+        font-size: 18px;
+        margin-bottom: 5px;
+      }
+      input {
+        text-indent: 25px;
+        background: transparent;
+        border: 1px solid white;
+      }
+    }
+    &-title {
+      font-size: 40px;
+      font-weight: bold;
+      margin-bottom: 24px;
+    }
+    &-text {
+      font-size: 24px;
+      max-width: 600px;
+      line-height: 28.13px;
+    }
+    &-flex {
+      margin-top: auto;
+      align-items: flex-end;
+
+      input {
+        width: 260px;
+        height: 60px;
+        border-radius: 5px;
+        font-size: 18px;
+        &::placeholder {
+          color: white;
+        }
+      }
+    }
+    &-submit {
+      border: none;
+
+      background: #ff992f;
+      text-align: center;
+      color: white;
+      cursor: pointer;
+    }
+  }
+}
+.range-input {
+  width: 100%;
+  -webkit-appearance: none;
+  height: 1px;
+  background: white;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+  margin-bottom: 10px;
+}
+.range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  background: #ff992f;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.range-input::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  background: #ff992f;
+  cursor: pointer;
+}
+
+.range-numbers {
+  p {
+    font-size: 12px;
+    width: calc(100% / 3);
+    text-align: center;
+  }
+}
+
+.check-box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  &-figure {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border: 1px solid white;
+    margin-right: 14px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .img {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+  p {
+    font-size: 16px;
+    font-family: $main-font;
+    white-space: nowrap;
+  }
+  .selected {
+    background: orange;
+    .img {
+      opacity: 1;
+    }
+  }
+}
+
+.text-box {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+  cursor: pointer;
+  font-size: 14px;
+  height: 40px;
+  border: 1px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 30px;
+
+  border-radius: 5px;
+  &-selected {
+    border: 1px solid $orange;
+  }
+}

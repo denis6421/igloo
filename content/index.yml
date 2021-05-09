@@ -1,0 +1,8 @@
+title: about
+layout: pages/page
+script: about/index
+
+main:
+  - about/body.md
+navbar:
+  - ./_shared/navbar/index.md
