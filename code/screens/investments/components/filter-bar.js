@@ -11,10 +11,7 @@ const FilterBar = ({
 }) => {
   return (
     <div className="filter flex-start">
-      <div className="main-grid filter-bar flex-start">
-        <div className="filter-toggle filter-toggle-open">{toggleText}</div>
-        {location}
-      </div>
+      {location}
       <div className="filter-menu">
         <section className="filter-menu-overlay"></section>
         <div className="filter-menu-content">

@@ -1,6 +1,6 @@
 ---
 layout: screens/investments/components/page-header
-image: https://res.cloudinary.com/drchsoaic/image/upload/v1619268196/Rectangle_15_jwdv0j.png
+image: /assets/images/investments/header.png
 title: ВОЗМОЖНОСТИ ИНВЕСТИЦИЙ
 ---
 

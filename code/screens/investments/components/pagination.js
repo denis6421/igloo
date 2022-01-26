@@ -7,13 +7,13 @@ const pagination = ({ backBtn, nextBtn, _relativeURL, _ID }) => {
   };
   return (
     <div className="pagination">
-      <button className="pagination-back pagination-toggle">
+      {/* <button className="pagination-back pagination-toggle">
         <Img src={generateUrl(backBtn)} />
-      </button>
+      </button> */}
       <div className="flex-start pagination-buttons"></div>
-      <button className="pagination-next pagination-toggle">
+      {/* <button className="pagination-next pagination-toggle">
         <Img src={generateUrl(nextBtn)} />
-      </button>
+      </button> */}
     </div>
   );
 };

@@ -1,13 +1,15 @@
 ---
 layout: shared/navbar/index
-logo:
-links:
-  - name: О компании
-    url: about
-  - name: Наши услуги
-    url:
-  - name: Возможности инвестиций
-    url: /investments
-  - name: Ваши вопросы
-    url:
+home: /
+link:
+  - links/link.md
+link1:
+  - links/link-1.md
+link2:
+  - links/link-2.md
+
+link3:
+  - links/link-3.md
+link4:
+  - links/link-4.md
 ---

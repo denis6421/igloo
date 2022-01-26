@@ -1,0 +1,123 @@
+.contact {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  opacity: 0;
+  transition: 0.2s all;
+  pointer-events: none;
+  &-active {
+    opacity: 1;
+    pointer-events: all;
+  }
+  &-overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  &-form {
+    border-radius: 5px;
+    width: calc(100% - 100px);
+    max-width: 1230px;
+    height: 700px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    top: 10vh;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    display: flex;
+    justify-content: space-between;
+
+    &-left {
+      width: 580px;
+      height: 100%;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    &-submit {
+      width: 259px;
+      height: 60px;
+      border: none;
+      font-size: 18px;
+      background: #ff992f;
+      margin-top: auto;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    &-right {
+      padding: 50px 45px 50px 50px;
+      width: calc(100% - 580px);
+      display: flex;
+      flex-direction: column;
+
+      h3 {
+        font-size: 24px;
+        line-height: 28.13px;
+        margin-bottom: 24px;
+      }
+      &-sections {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        section {
+          width: calc(50% - 10px);
+          position: relative;
+          margin-bottom: 20px;
+          &:last-of-type {
+            width: 100%;
+            margin-bottom: 0px;
+          }
+          h4 {
+            margin-bottom: 8px;
+            font-size: 18px;
+          }
+          p {
+            position: absolute;
+            bottom: -15px;
+            font-size: 12px;
+            display: none;
+          }
+
+          input,
+          textarea {
+            height: 60px;
+            border: 1px solid #ffffff;
+            border-radius: 5px;
+            color: white;
+            width: 100%;
+            background: transparent;
+            text-indent: 20px;
+            font-size: 18px;
+
+            &::placeholder {
+              color: rgba(255, 255, 255, 0.5);
+            }
+          }
+          textarea {
+            height: 136px;
+            resize: none;
+            padding-top: 15px;
+          }
+        }
+      }
+    }
+    &-close {
+      cursor: pointer;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background: transparent;
+    }
+  }
+}

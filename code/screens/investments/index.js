@@ -1,12 +1,20 @@
 import React from "react";
 
-const investments = ({ header, subscribe, filterBar, pagination }) => {
+const investments = ({
+  header,
+  subscribe,
+  filterBar,
+  pagination,
+  facilities,
+  breadCrumbs,
+}) => {
   return (
-    <main className="investments page">
+    <main className="investments page page-grid">
+      {breadCrumbs}
       {header}
       <div className="investments-content">
         {filterBar}
-        <ul className="investments-list flex-start main-grid"></ul>
+        {facilities}
         {pagination}
       </div>
       {subscribe}

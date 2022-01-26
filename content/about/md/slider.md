@@ -1,6 +1,6 @@
 ---
 layout: screens/about/components/slider
-
+title: НАША КОМАНДА
 slides:
   - image: ../assets/images/about/slide-figure.png
     title: ВЕТАЛИЙ ДОНСКОЙ

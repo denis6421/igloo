@@ -23,3 +23,10 @@ export const addEvent = (element, eventType, customEvent) => {
   if (!element || !customEvent || !eventType) return;
   element.addEventListener(eventType, (e) => customEvent(e));
 };
+
+export const toggleBodyOverflow = (val) => {
+  if (val) {
+    return (document.body.style.overflow = "hidden");
+  }
+  document.body.style.overflow = "auto";
+};

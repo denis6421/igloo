@@ -3,8 +3,10 @@ layout: screens/about/index
 
 subscribe:
   - ../_shared/subscribe/index.md
-flex1:
-  - md/flex-1.md
+breadCrumbs:
+  - md/bread-crumbs.md
+header:
+  - md/header/index.md
 flex2:
   - md/flex-2.md
 slider:

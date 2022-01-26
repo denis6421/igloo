@@ -1,11 +1,10 @@
-import { data } from "./data.js";
 import {
   addEvent,
   getElement,
   getElementAttribute,
   getElements,
+  toggleBodyOverflow,
 } from "../shared.js";
-import { globalInit } from "../index.js";
 import {
   updateSearchParams,
   getPropertyFromUrl,
@@ -13,26 +12,64 @@ import {
 } from "../util/url.js";
 
 import { init } from "./filter.js";
-import { pagination } from "./pagination.js";
-import { elementsType, filterProperties } from "../consts.js";
-import { createFacility } from "./inverstment-html-elements.js";
-const limit = 16;
+import { createPagination } from "./pagination.js";
+import { elementsType, filterProperties, settings } from "../consts.js";
+import { initSlider } from "./slider.js";
+import { globalInit } from "../index.js";
 let priceTimeOut;
-let selectedPage = 0;
-let listToRender = [...data];
+let facillities = [];
+let container;
 window.onload = () => {
   init();
   globalInit();
-  setValuesFromQueryParams();
-  addEventsToPaginationToggles();
-  const page = getPropertyFromUrl("page");
-  filterList(page || 1);
   addEventsToFilterToggle();
+  getFacillities();
+};
+
+const handleFacillityPopup = (popup, show) => {
+  const body = document.body;
+
+  if (show) {
+    body.appendChild(popup);
+    setTimeout(() => {
+      popup.classList.add("facillity-popup-active");
+    }, 0);
+    toggleBodyOverflow(true);
+    return initSlider();
+  }
+  const popupToRemove = getElement(".facillity-popup");
+  popup.classList.remove("facillity-popup-active");
+  toggleBodyOverflow();
+  return setTimeout(() => {
+    body.removeChild(popupToRemove);
+  }, 200);
+};
+
+const getFacillities = () => {
+  const page = getPropertyFromUrl("page");
+  container = getElement(".investments-list");
+  facillities = getElements(".facillity");
+  facillities.forEach((facillity) => {
+    addEventsToFacillity(facillity);
+  });
+  selectPage(page || 1, true);
+};
+
+const addEventsToFacillity = (facillity) => {
+  const popupOverlay = facillity.querySelector(".facillity-popup-overlay");
+  const popup = facillity.querySelector(".facillity-popup");
+  const close = facillity.querySelector(".facillity-popup-close");
+  addEvent(close, "click", () => handleFacillityPopup(popup));
+  addEvent(popupOverlay, "click", () => handleFacillityPopup(popup));
+  addEvent(facillity, "click", () => handleFacillityPopup(popup, true));
+  facillity.style.display = "flex";
+  facillity.removeChild(popup);
 };
 
 const toggleFilterMenu = (val) => {
   const menu = getElement(".filter-menu");
   if (val) {
+    scrollToTopOfList();
     return menu.classList.add("filter-menu-active");
   }
   return menu.classList.remove("filter-menu-active");
@@ -51,88 +88,12 @@ const addEventsToFilterToggle = () => {
 
 const clearFilters = () => {
   window.history.replaceState({}, document.title, "/" + "investments/?page=1");
-  filterList();
-  setValuesFromQueryParams();
+  return selectPage(1);
 };
 
-const mapFiles = (list, start, end) => {
-  const container = getElement(".investments-list");
-  container.innerHTML = "";
-  list.forEach((elem, index) => {
-    if (index < start || index > end) {
-      return;
-    }
-    const li = createFacility(elem);
-    container.appendChild(li);
-  });
-};
-
-const mapFilesByIndex = (list, page = 0) => {
-  const start = limit * page;
-  const end = start + limit;
-  mapFiles(list, start, end);
-};
-
-const createPagination = (list, selected) => {
-  selectedPage = selected;
-  const lastPage = Math.ceil(list.length / limit);
-  console.log(list);
-  const pages = pagination(selected, lastPage);
-
-  const container = getElement(".pagination-buttons");
-  container.innerHTML = "";
-  const prev = getElement(".pagination-back");
-  prev.style.display = pages.length <= 1 || selected === 1 ? "none" : "block";
-  const next = getElement(".pagination-next");
-  next.style.display =
-    pages.length === 1 || selected === lastPage ? "none" : "block";
-  pages.forEach((page) => {
-    const btn = createPaginationBtn(page, selected);
-    container.appendChild(btn);
-  });
-};
-
-const addEventsToPaginationToggles = () => {
-  const prev = getElement(".pagination-back");
-  const next = getElement(".pagination-next");
-  addEvent(prev, "click", handlePrev);
-  addEvent(next, "click", handleNext);
-};
-
-const handlePrev = () => {
-  const prevPage = selectedPage - 1;
-  if (prevPage === 0) {
-    return;
-  }
-  selectPage(prevPage);
-};
-const handleNext = () => {
-  const nextPage = Number(selectedPage) + 1;
-  const lastPage = Math.ceil(listToRender.length / limit);
-  if (nextPage === lastPage) {
-    return;
-  }
-  selectPage(nextPage);
-};
-const createPaginationBtn = (i, selected) => {
-  const pageBtn = document.createElement("button");
-  pageBtn.classList.add("page-btn");
-  if (i == selected) {
-    pageBtn.classList.add("page-btn-active");
-  } else {
-    pageBtn.classList.remove("page-btn-active");
-  }
-  pageBtn.addEventListener("click", () => {
-    selectPage(i);
-  });
-  pageBtn.innerText = i;
-  return pageBtn;
-};
-
-const selectPage = (page) => {
+const selectPage = (page, disableScroll) => {
   updateSearchParams("page", page);
-  createPagination(listToRender, page);
-  mapFilesByIndex(listToRender, page - 1);
+  filterList(facillities, container, page, disableScroll);
 };
 
 export const setRangeRevenueValues = (e) => {
@@ -140,8 +101,7 @@ export const setRangeRevenueValues = (e) => {
   const value = e.target.value;
   priceTimeOut = setTimeout(() => {
     updateSearchParams(filterProperties.revenue, value);
-    setValuesFromQueryParams();
-    return filterList();
+    return selectPage(1);
   }, 500);
 };
 
@@ -152,8 +112,7 @@ export const setRangePriceValues = (e) => {
     const to = e.target.value;
     updateSearchParams(filterProperties.price_from, from);
     updateSearchParams(filterProperties.price_to, to);
-    setValuesFromQueryParams();
-    return filterList();
+    return selectPage(1);
   }, 500);
 };
 
@@ -163,8 +122,7 @@ export const setPriceValues = (e) => {
   const value = e.target.value || 0;
   priceTimeOut = setTimeout(() => {
     updateSearchParams(propertyName, value);
-    setValuesFromQueryParams();
-    return filterList();
+    return selectPage(1);
   }, 500);
 };
 
@@ -177,8 +135,7 @@ export const setTextBoxesValue = (e) => {
   } else {
     updateSearchParams(param, value);
   }
-  setValuesFromQueryParams();
-  return filterList();
+  return selectPage(1);
 };
 
 export const setCheckBoxesValue = (e) => {
@@ -187,8 +144,7 @@ export const setCheckBoxesValue = (e) => {
   const values = getPropertyFromUrl(param);
   const newValues = handleCheckBoxSelect(values, value);
   updateSearchParams(param, newValues);
-  setValuesFromQueryParams();
-  return filterList();
+  return selectPage(1);
 };
 
 const handleCheckBoxSelect = (values, value) => {
@@ -204,14 +160,6 @@ const handleCheckBoxSelect = (values, value) => {
   }
   newArr.push(value);
   return newArr;
-};
-
-const setValuesFromQueryParams = () => {
-  const values = getValuesFromSearchQuery(filterProperties);
-  const elementsAndValues = getElementsAssignedToFilterProperty(values);
-  elementsAndValues.forEach((filter) => {
-    setElementsActiveIfNeeded(filter);
-  });
 };
 
 const setElementsActiveIfNeeded = (filter) => {
@@ -264,35 +212,91 @@ const getElementsAssignedToFilterProperty = (values) => {
     };
   });
 };
-
-const filterList = (page = 1) => {
-  const values = getValuesFromSearchQuery(filterProperties);
-  delete values.page;
-  const list = data.filter((elem) => {
-    let validation = [];
-    Object.keys(values).forEach((key) => {
-      const filterValue = values[key];
-      const isValid = validateByType(elem, key, filterValue);
-      validation.push(isValid);
-    });
-    return !validation.includes(false);
-  });
-  listToRender = list;
-  selectPage(page);
+const handleElementsPagination = (index, start, end) => {
+  return index >= start && index < end;
 };
 
-const validateByType = (elem, key, filterValue) => {
-  const elementValue = elem[key];
+const scrollToTopOfList = () => {
+  const list = getElement(".investments-content");
+  const listOffset = list.offsetTop - 100;
+  window.scrollTo(0, listOffset);
+};
+
+const filterList = (list, container, page = 1, disableScroll) => {
+  if (!disableScroll) {
+    scrollToTopOfList();
+  }
+  setTimeout(() => {
+    const searchParams = getValuesFromSearchQuery(filterProperties);
+    delete searchParams.page;
+    container.innerHTML = "";
+    let listToRender = [];
+    const elementsAndValues = getElementsAssignedToFilterProperty(searchParams);
+    elementsAndValues.forEach((filter) => {
+      setElementsActiveIfNeeded(filter);
+    });
+    const start = settings.listLimit * (page - 1);
+    const end = start + settings.listLimit;
+    list.forEach((facillity, index) => {
+      appendFacillities(
+        listToRender,
+        searchParams,
+        container,
+        facillity,
+        index,
+        start,
+        end
+      );
+    });
+    createPagination(listToRender, page, selectPage);
+  }, 100);
+};
+
+const appendFacillities = (
+  listToRender,
+  searchParams,
+  container,
+  facillity,
+  index,
+  start,
+  end
+) => {
+  const isValid = handleIsElementValid(searchParams, facillity);
+  const isInRange = handleElementsPagination(index, start, end);
+  if (isValid) {
+    listToRender.push(facillity);
+    if (isInRange) {
+      container.appendChild(facillity);
+    }
+  }
+};
+
+const handleIsElementValid = (searchParams, facillity) => {
+  let validation = [];
+  Object.keys(searchParams).forEach((key) => {
+    const filterValue = searchParams[key];
+    const isValid = validateByType(facillity, key, filterValue);
+    validation.push(isValid);
+  });
+  return !validation.includes(false);
+};
+
+const validateByType = (element, key, filterValue) => {
+  const elementValue = getElementAttribute(element, key);
   if (!filterValue) {
     return true;
   }
+
   switch (key) {
     case filterProperties.price_from:
-      return elem.price >= Number(filterValue);
+      const elementPriceFrom = getElementAttribute(element, "price_from");
+      return elementPriceFrom >= Number(filterValue);
     case filterProperties.price_to:
-      return elem.price <= Number(filterValue);
+      const elementPriceTo = getElementAttribute(element, "price_to");
+      return elementPriceTo <= Number(filterValue);
     case filterProperties.revenue:
-      return elem.revenue <= Number(filterValue);
+      const elementRevenue = getElementAttribute(element, "revenue");
+      return elementRevenue == Number(filterValue);
     default:
       return !filterValue ? true : elementValue === filterValue;
   }

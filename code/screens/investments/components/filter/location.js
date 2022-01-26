@@ -5,11 +5,14 @@ import {
   filterPropertyValues,
 } from "../../../../../assets/js/consts";
 
-const Location = ({ location1, location2, location3 }) => {
+const Location = ({ location1, location2, location3, filter_toggle }) => {
   return (
-    <div className="filter-location">
+    <div className="filter-location main-grid">
+      <button className="filter-toggle filter-toggle-open filter-location-element">
+        {filter_toggle}
+      </button>
       <section
-        className="text-box"
+        className="text-box filter-location-element"
         element-type={elementsType.box}
         data-type={filterProperties.location}
         data-value={filterPropertyValues.location.option_1}
@@ -17,7 +20,7 @@ const Location = ({ location1, location2, location3 }) => {
         {location1}
       </section>
       <section
-        className="text-box"
+        className="text-box filter-location-element"
         element-type={elementsType.box}
         data-type={filterProperties.location}
         data-value={filterPropertyValues.location.option_2}
@@ -25,7 +28,7 @@ const Location = ({ location1, location2, location3 }) => {
         {location2}
       </section>
       <section
-        className="text-box"
+        className="text-box filter-location-element"
         element-type={elementsType.box}
         data-type={filterProperties.location}
         data-value={filterPropertyValues.location.option_3}

@@ -1,5 +1,5 @@
 ---
 layout: screens/investments/components/pagination
-backBtn: ../assets/images/home/left.svg
-nextBtn: ../assets/images/home/right.svg
+backBtn: ../assets/images/shared/left.svg
+nextBtn: ../assets/images/shared/right.svg
 ---

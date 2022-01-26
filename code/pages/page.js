@@ -1,6 +1,15 @@
 import React from "react";
 
-const Page = ({ title, navbar, main, script, _relativeURL, _ID }) => (
+const Page = ({
+  title,
+  footer,
+  navbar,
+  main,
+  script,
+  _relativeURL,
+  _ID,
+  contactPopup,
+}) => (
   <html>
     <head>
       <title>Igloo - {title}</title>
@@ -19,7 +28,7 @@ const Page = ({ title, navbar, main, script, _relativeURL, _ID }) => (
       />
     </head>
     {navbar}
-    <body>
+    <body data-title={title}>
       {main}
       {script != undefined ? (
         <script
@@ -27,6 +36,9 @@ const Page = ({ title, navbar, main, script, _relativeURL, _ID }) => (
           src={_relativeURL(`/assets/js/${script}.js`, _ID)}
         />
       ) : null}
+
+      {footer}
+      {contactPopup}
     </body>
   </html>
 );

@@ -9,7 +9,7 @@ export const filterProperties = {
   investment: "investment",
   price_from: "price_from",
   price_to: "price_to",
-  class: "class",
+  property_class: "property_class",
   revenue: "revenue",
   commissioning: "commissioning",
   location: "location",
@@ -28,13 +28,17 @@ export const filterPropertyValues = {
     option_3: "2023",
   },
   location: {
-    option_1: "first_shore",
+    option_1: "right_shore",
     option_2: "left_shore",
     option_3: "all_kiev",
   },
-  class: {
+  property_class: {
     option_1: "comfort",
     option_2: "business",
     option_3: "premium",
   },
+};
+
+export const settings = {
+  listLimit: 16,
 };

@@ -1,0 +1,63 @@
+.footer {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  &-socials {
+    display: flex;
+    margin-top: 20px;
+    .img {
+      margin-right: 20px;
+      &:last-child {
+        margin-right: 0px;
+      }
+    }
+  }
+  &-flex {
+    display: flex;
+    align-items: flex-start;
+  }
+  * {
+    font-family: $main-font;
+  }
+  &-contact {
+    h4 {
+      margin-bottom: 12px;
+    }
+    button {
+      height: 50px;
+      width: 205px;
+      border: 1px solid $orange;
+      font-size: 18px;
+      border-radius: 5px;
+      background: transparent;
+    }
+  }
+  &-logo {
+    width: 140px;
+    height: auto;
+    margin-right: 80px;
+    .img {
+      width: 100%;
+      height: 100%;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+  &-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex: 1;
+    p {
+      font-size: 18px;
+      line-height: 21.09px;
+      a {
+      }
+      &:nth-child(2) {
+        margin-top: 15px;
+      }
+    }
+  }
+}
